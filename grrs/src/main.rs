@@ -22,7 +22,7 @@ struct Cli {
 // #[arg(short = 'o', long = "output")]
 
 
-fn main() -> Result<(), Box<dyn std::error::Error>>{
+fn main() {
     // let args = Cli::parse(); 
 
     // let content = std::fs::read_to_string(&args.path).expect("couldn't read file"); 
@@ -53,7 +53,22 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
     // Ok(()) // the result is OK, good to go.
 
     // Question Mark => just like .unwrap() but return in the error arm
-    let content = std::fs::read_to_string("test.txt")?; // ? => convert to error type from std::io::Error
-    println!("file content: {}", content);
-    Ok(())
+    // let content = std::fs::read_to_string("test.txt")?; // ? => convert to error type from std::io::Error
+    // println!("file content: {}", content);
+    // Ok(())
+
+    // ...
+
+    // now test! 
+
+}
+
+fn answer() -> u32 {
+    42
+}
+// this can be everywhere in any rs file
+// if "cargo test", will automatically test 
+#[test] 
+fn check_answer_validity() {
+    assert_eq!(answer(), 42); 
 }
