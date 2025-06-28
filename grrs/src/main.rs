@@ -2,19 +2,28 @@
 // #1 look at test.txt
 // #2 print out the lines that contain "foobar" 
 
+// Parsing CLI argument with Clap
+use clap::Parser; 
+
+/// Search for a pattern in a file and display the lines that contain it 
+#[derive(Parser)]
 struct Cli {
+    /// The pattern to look for 
     pattern: String,
+    /// The path to the file to read 
     path: std::path::PathBuf,
 }
 
+
+// Note: 
+// There are a lot of custom attributes you can add to fields. 
+// EX) 
+// if want to use this field for the argument after -o or --output, 
+// #[arg(short = 'o', long = "output")]
+
+
 fn main() {
-    let pattern = std::env::args().nth(1).expect("no pattern given"); 
-    let path = std::env::args().nth(2).expect("no path given"); 
+    let args = Cli::parse(); 
 
-    let args = Cli { 
-        pattern: pattern.clone(),
-        path: std::path::PathBuf::from(path.clone()),
-    };
-
-    println!("pattern: {:?}, path: {:?}", pattern, path);
+    println!("pattern: {:?}, path: {:?}", args.pattern, args.path)
 }
