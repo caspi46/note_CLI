@@ -44,11 +44,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>>{
     // let content = std::fs::read_to_string("text.txt").unwrap(); 
 
     // w/o panic => return the result<(), std::error::Error
-    let result = std::fs:read_to_string("test.txt"); 
-    let content = match result {
-        Ok(content) => { content },
-        Err(error) => { return Err(error.into()); }
-    };
-    println!("file content: {}", content); 
-    Ok(()) // the result is OK, good to go.
+    // let result = std::fs:read_to_string("test.txt"); 
+    // let content = match result {
+    //     Ok(content) => { content },
+    //     Err(error) => { return Err(error.into()); }
+    // };
+    // println!("file content: {}", content); 
+    // Ok(()) // the result is OK, good to go.
+
+    // Question Mark => just like .unwrap() but return in the error arm
+    let content = std::fs::read_to_string("test.txt")?; // ? => convert to error type from std::io::Error
+    println!("file content: {}", content);
+    Ok(())
 }
