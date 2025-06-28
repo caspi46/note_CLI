@@ -1,2 +1,4 @@
 # note_cli
-note_clie project with Rust
+note_cli project with Rust
+
+This project is for learning Rust
