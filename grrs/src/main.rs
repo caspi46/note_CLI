@@ -22,14 +22,33 @@ struct Cli {
 // #[arg(short = 'o', long = "output")]
 
 
-fn main() {
-    let args = Cli::parse(); 
+fn main() -> Result<(), Box<dyn std::error::Error>>{
+    // let args = Cli::parse(); 
 
-    let content = std::fs::read_to_string(&args.path).expect("couldn't read file"); 
+    // let content = std::fs::read_to_string(&args.path).expect("couldn't read file"); 
 
-    for line in content.lines() {
-        if line.contains(&args.pattern) {
-            println!("{}", line); 
-        }
-    }
+    // for line in content.lines() {
+    //     if line.contains(&args.pattern) {
+    //         println!("{}", line); 
+    //     }
+    // }
+
+    // let result = std::fs::read_to_string("test.txt"); 
+    // let content = match result {
+    //     Ok(content) => { content }, 
+    //     Err(error) => { panic!("Can't deal with {}, just exit here", error); }
+    // };
+    // println!("file content: {}", content); 
+
+    // OR fo short cut the above error handling => abort the program if error occurs 
+    // let content = std::fs::read_to_string("text.txt").unwrap(); 
+
+    // w/o panic => return the result<(), std::error::Error
+    let result = std::fs:read_to_string("test.txt"); 
+    let content = match result {
+        Ok(content) => { content },
+        Err(error) => { return Err(error.into()); }
+    };
+    println!("file content: {}", content); 
+    Ok(()) // the result is OK, good to go.
 }
