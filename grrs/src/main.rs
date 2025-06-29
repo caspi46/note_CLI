@@ -14,6 +14,14 @@ struct Cli {
     path: std::path::PathBuf,
 }
 
+fn find_matches(content: &str, pattern: &str, mut writer: impl std::io::Write) {
+    for line in content.lines() {
+        if line.contains(pattern) {
+            writeln!(writer, "{}", line); 
+        }
+    }
+}
+
 
 // Note: 
 // There are a lot of custom attributes you can add to fields. 
@@ -22,16 +30,14 @@ struct Cli {
 // #[arg(short = 'o', long = "output")]
 
 
-fn main() {
-    // let args = Cli::parse(); 
+fn main() -> Result<()> {
+    let args = Cli::parse();
+    let content = std::fs::read_to_string(&args.path)
+        .with_context(|| format!("could not read file `{}`", args.path.display()))?;
 
-    // let content = std::fs::read_to_string(&args.path).expect("couldn't read file"); 
+    find_matches(&content, &args.pattern, &mut std::io::stdout());
 
-    // for line in content.lines() {
-    //     if line.contains(&args.pattern) {
-    //         println!("{}", line); 
-    //     }
-    // }
+    Ok(())
 
     // let result = std::fs::read_to_string("test.txt"); 
     // let content = match result {
@@ -71,4 +77,11 @@ fn answer() -> u32 {
 #[test] 
 fn check_answer_validity() {
     assert_eq!(answer(), 42); 
+}
+
+#[test]
+fn find_a_match() {
+    let mut result = Vec::new(); 
+    find_matches("lorem ipsum\ndolor sit amet", "lorem", &mut result); 
+    assert_eq!(result, b"lorem ipsum\n"); 
 }
