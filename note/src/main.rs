@@ -1,5 +1,5 @@
 
-use note::{Note, Commands};
+use note::{Plan, Commands};
 use regex::Regex;
 use clap::{Parser}; 
 
@@ -19,7 +19,7 @@ pub fn parse_date(s: &str) -> Option<(u32, u32, u32)> {
 }
 
 fn main () {
-    let com = Note::parse(); 
+    let com = Plan::parse(); 
     let date_format = Regex::new(r"^(\d{1,2})/(\d{1,2})/(\d{2})$").unwrap(); 
     match com.command {
         Commands::Add {ref new_note, ref start, ref due} => {

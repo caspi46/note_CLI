@@ -1,7 +1,7 @@
 use clap::{Parser, Subcommand};
 use std::fs::File;
 use std::io::BufReader;
-
+use std::path::Path; 
 use std::io::prelude::*; 
 
 
@@ -14,15 +14,15 @@ pub fn format_dates (date: Option<(u32, u32, u32)>) -> String {
     }
 }
 
-// Note CLI 
+// Plan CLI 
 #[derive(Parser)] 
 #[command(name = "tasker", version, about = "A CLI task manager")]
-pub struct Note {
+pub struct Plan {
     #[command(subcommand)]
     pub command: Commands
 }
 
-impl Note {
+impl Plan {
     pub fn add(&self, new_note: &String, start: Option<(u32, u32, u32)>, due: Option<(u32, u32, u32)>) {
         let note = Entry::new(String::from(new_note), start, due); 
         note.add_result();
@@ -77,12 +77,14 @@ impl Entry {
 // Notes : handle the entire notes 
 pub struct Notes {
     pub notes : Vec<String>, 
-    pub note_path : String, 
+    pub note_path : String,  // if possible backup file 
     pub note_bak : String, 
 }
 
 impl Notes {
     pub fn new() {
+        let path = Path::new("plan.txt"); 
+        // TODO: create/find the plan file that contains the list of plans 
 
     }
 }
