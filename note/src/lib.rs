@@ -77,15 +77,22 @@ impl Entry {
 // Notes : handle the entire notes 
 pub struct Notes {
     pub notes : Vec<String>, 
-    pub note_path : String,  // if possible backup file 
+    pub note_path : std::path::PathBuf,  // if possible backup file 
     pub note_bak : String, 
 }
 
 impl Notes {
-    pub fn new() {
-        let path = Path::new("plan.txt"); 
-        // TODO: create/find the plan file that contains the list of plans 
+    pub fn new() -> Result<Self, std::io::Error> {
+        let notes = Vec::new(); 
+        let note_path = std::path::PathBuf::from(
+                std::env::var_os("OUT_DIR")
+                    .ok_or_else(|| std::io::ErrorKind::NotFound)?); 
+        let note_bak = String::from("");
 
+        Ok(Self {notes, note_path, note_bak })
+
+        // TODO: create/find the plan file that contains the list of plans 
+        
     }
 }
 
